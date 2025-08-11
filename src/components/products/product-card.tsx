@@ -21,6 +21,18 @@ interface ProductCardProps {
 export default function ProductCard({ id, name, description, price, unit, image, hint }: ProductCardProps) {
   const pathname = usePathname()
   const isAdminOrStaff = pathname.startsWith('/products') || pathname.startsWith('/staff/products');
+  const isCustomer = pathname.startsWith('/customers');
+
+  const getHref = () => {
+    if (isAdminOrStaff) {
+      return `/products/${id}`;
+    }
+    if (isCustomer) {
+      return `/customers/products/${id}`;
+    }
+    return '#';
+  }
+
 
   return (
     <Card className="flex flex-col overflow-hidden transition-all hover:shadow-lg group">
@@ -34,7 +46,7 @@ export default function ProductCard({ id, name, description, price, unit, image,
                 data-ai-hint={hint}
             />
             {isAdminOrStaff && (
-               <Link href={`/products/${id}`} className="absolute top-2 right-2">
+               <Link href={getHref()} className="absolute top-2 right-2">
                   <Button size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Pencil className="h-4 w-4" />
                       <span className="sr-only">Edit Product</span>
@@ -52,7 +64,7 @@ export default function ProductCard({ id, name, description, price, unit, image,
           ${price} <span className="text-sm font-normal text-muted-foreground">/{unit}</span>
         </div>
         <Button asChild>
-          <Link href="#">
+          <Link href={getHref()}>
             <CalendarDays className="mr-2 h-4 w-4" />
             Book Now
           </Link>
