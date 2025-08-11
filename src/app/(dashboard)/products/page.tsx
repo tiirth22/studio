@@ -2,63 +2,7 @@ import Link from "next/link";
 import ProductCard from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-
-const products = [
-  {
-    id: "prod_1",
-    name: "Professional DSLR Camera",
-    description: "Capture stunning photos and videos with our top-of-the-line DSLR camera.",
-    price: 50,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "camera photography",
-  },
-  {
-    id: "prod_2",
-    name: "4-Person Camping Tent",
-    description: "Spacious and durable tent, perfect for your next outdoor adventure.",
-    price: 25,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "tent camping",
-  },
-  {
-    id: "prod_3",
-    name: "High-Performance Projector",
-    description: "Ideal for business presentations or movie nights. Bright and clear display.",
-    price: 40,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "projector movie",
-  },
-  {
-    id: "prod_4",
-    name: "Heavy-Duty Mountain Bike",
-    description: "Conquer any trail with this rugged and reliable mountain bike.",
-    price: 35,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "mountain bike",
-  },
-  {
-    id: "prod_5",
-    name: "Portable PA System",
-    description: "Powerful sound system for events, parties, and public speaking.",
-    price: 60,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "speaker audio",
-  },
-  {
-    id: "prod_6",
-    name: "Cordless Power Drill",
-    description: "A versatile and powerful drill for all your DIY projects.",
-    price: 20,
-    unit: "day",
-    image: "https://placehold.co/600x400.png",
-    hint: "power tool",
-  }
-];
+import { products } from "@/lib/data";
 
 export default function ProductsPage() {
   return (

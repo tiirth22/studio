@@ -8,16 +8,11 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-
-const rentals = [
-  { id: "ORD001", customer: "Liam Johnson", status: "Picked Up", date: "2023-06-23", amount: "$250.00" },
-  { id: "ORD002", customer: "Olivia Smith", status: "Returned", date: "2023-06-24", amount: "$150.00" },
-  { id: "ORD003", customer: "Noah Williams", status: "Reserved", date: "2023-06-25", amount: "$350.00" },
-  { id: "ORD004", customer: "Emma Brown", status: "Picked Up", date: "2023-06-26", amount: "$450.00" },
-  { id: "ORD005", customer: "Ava Jones", status: "Returned", date: "2023-06-27", amount: "$550.00" },
-]
+import { getRentals } from "@/lib/data";
 
 export default function RecentRentals() {
+  const rentals = getRentals().slice(-5).reverse();
+
   return (
     <Card>
       <CardHeader>
@@ -43,14 +38,14 @@ export default function RecentRentals() {
                 <TableCell>
                   <Badge variant={
                     rental.status === 'Returned' ? 'secondary' :
-                    rental.status === 'Picked Up' ? 'outline' : 'default'
+                    rental.status === 'Picked Up' || rental.status === 'Active' ? 'outline' : 'default'
                   } className={
-                    rental.status === 'Picked Up' ? 'bg-accent/20 border-accent/50 text-accent-foreground' : rental.status === 'Reserved' ? 'bg-primary/90' : ''
+                    rental.status === 'Picked Up' || rental.status === 'Active' ? 'bg-accent/20 border-accent/50 text-accent-foreground' : rental.status === 'Reserved' || rental.status === 'Upcoming' ? 'bg-primary/90' : ''
                   }>
                     {rental.status}
                   </Badge>
                 </TableCell>
-                <TableCell>{rental.date}</TableCell>
+                <TableCell>{rental.from}</TableCell>
                 <TableCell className="text-right">{rental.amount}</TableCell>
               </TableRow>
             ))}

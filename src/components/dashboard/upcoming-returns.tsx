@@ -1,15 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { getUpcomingReturns } from "@/lib/data"
 
-const upcomingReturns = [
-  { name: "DSLR Camera", customer: "Olivia Martin", dueDate: "in 2 days", avatar: "OM" },
-  { name: "Camping Tent", customer: "Jackson Lee", dueDate: "in 3 days", avatar: "JL" },
-  { name: "Electric Drill", customer: "Isabella Nguyen", dueDate: "in 4 days", avatar: "IN" },
-  { name: "Projector", customer: "William Kim", dueDate: "in 5 days", avatar: "WK" },
-  { name: "Mountain Bike", customer: "Sophia Davis", dueDate: "in 5 days", avatar: "SD" },
-]
 
 export default function UpcomingReturns() {
+  const upcomingReturns = getUpcomingReturns();
   return (
     <Card>
       <CardHeader>

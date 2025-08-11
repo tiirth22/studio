@@ -1,14 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-const rentals = [
-  { product: "Professional DSLR Camera", status: "Returned", from: "2024-06-01", to: "2024-06-05", amount: "$200.00" },
-  { product: "4-Person Camping Tent", status: "Active", from: "2024-07-10", to: "2024-07-17", amount: "$175.00" },
-  { product: "High-Performance Projector", status: "Upcoming", from: "2024-08-01", to: "2024-08-03", amount: "$80.00" },
-];
+import { getRentals } from '@/lib/data';
 
 export default function MyRentalsPage() {
+  const rentals = getRentals().filter(r => r.customer === 'Olivia Smith'); // Mocking current user
+
   return (
     <div className="space-y-6">
       <div>
@@ -33,14 +30,14 @@ export default function MyRentalsPage() {
                 </TableHeader>
                 <TableBody>
                     {rentals.map((rental) => (
-                    <TableRow key={rental.product}>
-                        <TableCell className="font-medium">{rental.product}</TableCell>
+                    <TableRow key={rental.id}>
+                        <TableCell className="font-medium">{rental.product.name}</TableCell>
                         <TableCell>
                         <Badge variant={
                             rental.status === 'Returned' ? 'secondary' :
                             rental.status === 'Active' ? 'outline' : 'default'
                         } className={
-                            rental.status === 'Active' ? 'bg-accent/20 border-accent/50 text-accent-foreground' : rental.status === 'Upcoming' ? 'bg-primary/90' : ''
+                            rental.status === 'Active' ? 'bg-accent/20 border-accent/50 text-accent-foreground' : rental.status === 'Upcoming' || rental.status === 'Reserved' ? 'bg-primary/90' : ''
                         }>
                             {rental.status}
                         </Badge>
