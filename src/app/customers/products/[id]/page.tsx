@@ -69,7 +69,8 @@ const products = [
   }
 ];
 
-export default function CustomerProductPage({ params: { id } }: { params: { id: string } }) {
+export default function CustomerProductPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const product = products.find(p => p.id === id);
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
