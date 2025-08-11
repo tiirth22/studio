@@ -64,14 +64,15 @@ export default function CustomerProductPage({ params }: { params: { id: string }
     );
   }
 
+  // This is still mock data. In a real app, you would fetch this from your database.
   const bookedDates = [new Date(2024, 7, 12), new Date(2024, 7, 13), { from: new Date(2024, 7, 20), to: new Date(2024, 7, 25) }];
 
   const rentalDays = date?.from && date?.to ? Math.ceil((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1 : 0;
   const totalPrice = rentalDays * product.price;
 
-  const handleBooking = () => {
-    if (date?.from && date?.to) {
-        createRental(product.id, date.from, date.to, totalPrice);
+  const handleBooking = async () => {
+    if (date?.from && date?.to && product) {
+        await createRental(product.id, date.from, date.to, totalPrice);
         // In a real app, you'd show a success message and redirect.
         router.push('/customers/rentals');
     }

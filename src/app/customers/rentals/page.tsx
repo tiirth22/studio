@@ -5,7 +5,7 @@ import { getRentalsByCustomer } from '@/lib/data';
 
 export default async function MyRentalsPage() {
   // In a real app, you would get the customer ID from the authenticated session.
-  const rentals = await getRentalsByCustomer('user_2'); 
+  const rentals = await getRentalsByCustomer('any_customer_id_for_mock'); 
 
   return (
     <div className="space-y-6">
