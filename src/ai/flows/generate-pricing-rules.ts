@@ -16,11 +16,13 @@ const GeneratePricingRulesInputSchema = z.object({
   rentalPeriods: z
     .string()
     .describe(
-      'A comma-separated list of rental periods (e.g., hourly, daily, weekly, monthly).'n    ),
+      'A comma-separated list of rental periods (e.g., hourly, daily, weekly, monthly).'
+    ),
   customerSegments: z
     .string()
     .describe(
-      'A comma-separated list of customer segments (e.g., corporate, VIP, seasonal).'n    ),
+      'A comma-separated list of customer segments (e.g., corporate, VIP, seasonal).'
+    ),
   basePrice: z.number().describe('The base price of the rental product.'),
 });
 export type GeneratePricingRulesInput = z.infer<typeof GeneratePricingRulesInputSchema>;
