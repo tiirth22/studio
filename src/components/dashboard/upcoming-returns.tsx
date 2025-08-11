@@ -3,8 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getUpcomingReturns } from "@/lib/data"
 
 
-export default function UpcomingReturns() {
-  const upcomingReturns = getUpcomingReturns();
+export default async function UpcomingReturns() {
+  const upcomingReturns = await getUpcomingReturns();
   return (
     <Card>
       <CardHeader>
