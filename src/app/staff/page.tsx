@@ -1,14 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users } from 'lucide-react';
 
-export default function CustomersPage() {
+export default function StaffPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold font-headline">Customers</h1>
+      <h1 className="text-3xl font-bold font-headline">Staff Portal</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Manage Customers</CardTitle>
-          <CardDescription>This section is under construction. You will soon be able to view and manage your customers from here.</CardDescription>
+          <CardTitle>Welcome, Staff!</CardTitle>
+          <CardDescription>This section is under construction. You will soon be able to manage rentals from here.</CardDescription>
         </CardHeader>
         <CardContent>
            <div className="flex flex-col items-center justify-center text-center border-2 border-dashed rounded-lg p-12 h-80">

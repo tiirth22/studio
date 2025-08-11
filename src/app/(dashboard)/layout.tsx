@@ -23,7 +23,6 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/products', label: 'Products', icon: Package },
   { href: '/orders', label: 'Orders', icon: ShoppingCart },
-  { href: '/customers', label: 'Customers', icon: Users },
   { href: '/reports', label: 'Reports', icon: BarChart },
   { href: '/pricing-rules', label: 'Dynamic Pricing', icon: Gem },
 ];
