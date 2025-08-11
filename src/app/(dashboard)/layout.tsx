@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart, LayoutDashboard, Package, Settings, ShoppingCart, Users, Gem } from 'lucide-react';
+import { LayoutDashboard, Package, Settings, ShoppingCart, Users, Gem } from 'lucide-react';
 
 import {
   SidebarProvider,
@@ -23,7 +23,6 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/products', label: 'Products', icon: Package },
   { href: '/orders', label: 'Orders', icon: ShoppingCart },
-  { href: '/reports', label: 'Reports', icon: BarChart },
   { href: '/pricing-rules', label: 'Dynamic Pricing', icon: Gem },
 ];
 
