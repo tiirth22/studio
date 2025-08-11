@@ -24,14 +24,14 @@ export interface Rental {
 }
 
 const products: Product[] = [
-  { id: 'prod_1', name: 'High-Performance E-Bike', description: 'A sleek and powerful electric bike for urban adventures.', price: 75, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'electric bike' },
-  { id: 'prod_2', name: 'Professional DSLR Camera', description: 'Capture stunning photos with this full-frame DSLR.', price: 50, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'camera photography' },
-  { id: 'prod_3', name: 'Camping Tent for 4 People', description: 'Spacious and durable tent, perfect for family camping trips.', price: 40, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'camping tent' },
-  { id: 'prod_4', name: 'Portable PA Sound System', description: 'Compact yet powerful sound system for events.', price: 90, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'sound system' },
-  { id: 'prod_5', name: 'Kayak for Two', description: 'Explore the waters with this stable and fun tandem kayak.', price: 60, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'kayak water' },
-  { id: 'prod_6', name: 'Heavy-Duty Power Drill', description: 'A reliable power drill for any of your construction needs.', price: 25, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'power tool' },
-  { id: 'prod_7', name: 'Stand-up Paddleboard', description: 'Enjoy a full-body workout on the water with our SUP.', price: 55, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'paddleboard water' },
-  { id: 'prod_8', name: '88-Key Digital Piano', description: 'A full-sized digital piano with weighted keys and realistic sound.', price: 80, unit: 'day', image: 'https://placehold.co/600x400.png', hint: 'piano music' },
+  { id: 'prod_1', name: 'High-Performance E-Bike', description: 'A sleek and powerful electric bike for urban adventures.', price: 75, unit: 'day', image: 'https://images.unsplash.com/photo-1577962144705-a386b620553f?q=80&w=600&h=400&fit=crop', hint: 'electric bike' },
+  { id: 'prod_2', name: 'Professional DSLR Camera', description: 'Capture stunning photos with this full-frame DSLR.', price: 50, unit: 'day', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&h=400&fit=crop', hint: 'camera photography' },
+  { id: 'prod_3', name: 'Camping Tent for 4 People', description: 'Spacious and durable tent, perfect for family camping trips.', price: 40, unit: 'day', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&h=400&fit=crop', hint: 'camping tent' },
+  { id: 'prod_4', name: 'Portable PA Sound System', description: 'Compact yet powerful sound system for events.', price: 90, unit: 'day', image: 'https://images.unsplash.com/photo-1588693951253-33068f655113?q=80&w=600&h=400&fit=crop', hint: 'sound system' },
+  { id: 'prod_5', name: 'Kayak for Two', description: 'Explore the waters with this stable and fun tandem kayak.', price: 60, unit: 'day', image: 'https://images.unsplash.com/photo-1594002135205-d12a76b68593?q=80&w=600&h=400&fit=crop', hint: 'kayak water' },
+  { id: 'prod_6', name: 'Heavy-Duty Power Drill', description: 'A reliable power drill for any of your construction needs.', price: 25, unit: 'day', image: 'https://images.unsplash.com/photo-1621989013282-73c155d21362?q=80&w=600&h=400&fit=crop', hint: 'power tool' },
+  { id: 'prod_7', name: 'Stand-up Paddleboard', description: 'Enjoy a full-body workout on the water with our SUP.', price: 55, unit: 'day', image: 'https://images.unsplash.com/photo-1598232936352-4a0b27464c12?q=80&w=600&h=400&fit=crop', hint: 'paddleboard water' },
+  { id: 'prod_8', name: '88-Key Digital Piano', description: 'A full-sized digital piano with weighted keys and realistic sound.', price: 80, unit: 'day', image: 'https://images.unsplash.com/photo-1520442931968-c99738099b82?q=80&w=600&h=400&fit=crop', hint: 'piano music' },
 ];
 
 let rentals: Rental[] = [
