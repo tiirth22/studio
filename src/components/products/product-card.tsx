@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Pencil } from "lucide-react";
+import { usePathname } from 'next/navigation'
+
 
 interface ProductCardProps {
   id: string;
@@ -15,6 +17,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ id, name, description, price, unit, image, hint }: ProductCardProps) {
+  const pathname = usePathname()
+  const isAdminOrStaff = pathname.startsWith('/products') || pathname.startsWith('/staff/products');
+
   return (
     <Card className="flex flex-col overflow-hidden transition-all hover:shadow-lg group">
       <CardHeader className="p-0">
@@ -26,12 +31,14 @@ export default function ProductCard({ id, name, description, price, unit, image,
                 className="object-cover"
                 data-ai-hint={hint}
             />
-            <Link href={`/products/${id}`} className="absolute top-2 right-2">
-                <Button size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Pencil className="h-4 w-4" />
-                    <span className="sr-only">Edit Product</span>
-                </Button>
-            </Link>
+            {isAdminOrStaff && (
+               <Link href={`/products/${id}`} className="absolute top-2 right-2">
+                  <Button size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Pencil className="h-4 w-4" />
+                      <span className="sr-only">Edit Product</span>
+                  </Button>
+              </Link>
+            )}
         </div>
       </CardHeader>
       <CardContent className="p-6 flex-grow">
@@ -43,7 +50,7 @@ export default function ProductCard({ id, name, description, price, unit, image,
           ${price} <span className="text-sm font-normal text-muted-foreground">/{unit}</span>
         </div>
         <Button asChild>
-          <Link href="/customers">
+          <Link href="#">
             <CalendarDays className="mr-2 h-4 w-4" />
             Book Now
           </Link>
