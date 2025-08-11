@@ -4,7 +4,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
 import { Separator } from '@/components/ui/separator';
 import { Package, CalendarDays, AlertTriangle } from 'lucide-react';
@@ -69,8 +69,8 @@ const products = [
   }
 ];
 
-export default function CustomerProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === params.id);
+export default function CustomerProductPage({ params: { id } }: { params: { id: string } }) {
+  const product = products.find(p => p.id === id);
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 4),
