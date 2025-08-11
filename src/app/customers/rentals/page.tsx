@@ -1,10 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { getRentals } from '@/lib/data';
+import { getRentalsByCustomer } from '@/lib/data';
 
-export default function MyRentalsPage() {
-  const rentals = getRentals().filter(r => r.customer === 'Olivia Smith'); // Mocking current user
+export default async function MyRentalsPage() {
+  // In a real app, you would get the customer ID from the authenticated session.
+  const rentals = await getRentalsByCustomer('user_2'); 
 
   return (
     <div className="space-y-6">

@@ -1,6 +1,5 @@
-
-// In a real application, this data would be stored in a database.
-// For this prototype, we're using in-memory data.
+import { db } from './db';
+import { format } from 'date-fns';
 
 export interface Product {
   id: string;
@@ -24,98 +23,124 @@ export interface Rental {
     dueDate?: string;
 }
 
-
-export const products: Product[] = [
-    {
-      id: "prod_1",
-      name: "Professional DSLR Camera",
-      description: "Capture stunning photos and videos with our top-of-the-line DSLR camera. Comes with a standard 18-55mm lens, battery, and charger.",
-      price: 50,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "camera photography",
-    },
-    {
-      id: "prod_2",
-      name: "4-Person Camping Tent",
-      description: "Spacious and durable tent, perfect for your next outdoor adventure. Weather-resistant and easy to set up.",
-      price: 25,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "tent camping",
-    },
-    {
-      id: "prod_3",
-      name: "High-Performance Projector",
-      description: "Ideal for business presentations or movie nights. Bright and clear display with HDMI and USB inputs.",
-      price: 40,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "projector movie",
-    },
-    {
-      id: "prod_4",
-      name: "Heavy-Duty Mountain Bike",
-      description: "Conquer any trail with this rugged and reliable mountain bike. Features front suspension and 21-speed gears.",
-      price: 35,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "mountain bike",
-    },
-    {
-      id: "prod_5",
-      name: "Portable PA System",
-      description: "Powerful sound system for events, parties, and public speaking. Includes microphone and stand.",
-      price: 60,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "speaker audio",
-    },
-    {
-      id: "prod_6",
-      name: "Cordless Power Drill",
-      description: "A versatile and powerful drill for all your DIY projects. Comes with a full set of bits and two batteries.",
-      price: 20,
-      unit: "day",
-      image: "https://placehold.co/600x400.png",
-      hint: "power tool",
-    }
-  ];
-
-export const rentals: Omit<Rental, 'product'> & { productId: string, customerId: string }[] = [
-    { id: "ORD001", customerId: "user_1", productId: "prod_1", status: "Picked Up", from: "2023-06-23", to: "2023-06-25", amount: "$250.00" },
-    { id: "ORD002", customerId: "user_2", productId: "prod_2", status: "Returned", from: "2023-06-24", to: "2023-06-26", amount: "$150.00" },
-    { id: "ORD003", customerId: "user_3", productId: "prod_3", status: "Reserved", from: "2023-06-25", to: "2023-06-28", amount: "$350.00" },
-    { id: "ORD004", customerId: "user_4", productId: "prod_4", status: "Picked Up", from: "2023-06-26", to: "2023-06-29", amount: "$450.00" },
-    { id: "ORD005", customerId: "user_5", productId: "prod_5", status: "Returned", from: "2023-06-27", to: "2023-06-30", amount: "$550.00" },
-    { id: "ORD006", customerId: "user_2", productId: "prod_1", status: "Returned", from: "2024-06-01", to: "2024-06-05", amount: "$200.00" },
-    { id: "ORD007", customerId: "user_2", productId: "prod_2", status: "Active", from: "2024-07-10", to: "2024-07-17", amount: "$175.00" },
-    { id: "ORD008", customerId: "user_2", productId: "prod_3", status: "Upcoming", from: "2024-08-01", to: "2024-08-03", amount: "$80.00" },
-];
-
-export const customers = [
-    { id: "user_1", name: "Liam Johnson", avatar: "LJ" },
-    { id: "user_2", name: "Olivia Smith", avatar: "OS" },
-    { id: "user_3", name: "Noah Williams", avatar: "NW" },
-    { id: "user_4", name: "Emma Brown", avatar: "EB" },
-    { id: "user_5", name: "Ava Jones", avatar: "AJ" },
-    { id: "user_6", name: "Olivia Martin", avatar: "OM" },
-    { id: "user_7", name: "Jackson Lee", avatar: "JL" },
-    { id: "user_8", name: "Isabella Nguyen", avatar: "IN" },
-    { id: "user_9", name: "William Kim", avatar: "WK" },
-    { id: "user_10", name: "Sophia Davis", avatar: "SD" },
-]
-
-
-export function getRentals(): Rental[] {
-    return rentals.map(r => ({
-        ...r,
-        product: products.find(p => p.id === r.productId)!,
-        customer: customers.find(c => c.id === r.customerId)!.name
+export async function getProducts(): Promise<Product[]> {
+    const { rows } = await db.query('SELECT * FROM products');
+    return rows.map(row => ({
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        price: parseFloat(row.price),
+        unit: row.unit,
+        image: row.image,
+        hint: row.hint,
     }));
 }
 
-export function getUpcomingReturns() {
+export async function getProductById(id: string): Promise<Product | undefined> {
+    const { rows } = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+    if (rows.length === 0) {
+        return undefined;
+    }
+    const row = rows[0];
+    return {
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        price: parseFloat(row.price),
+        unit: row.unit,
+        image: row.image,
+        hint: row.hint,
+    };
+}
+
+
+export async function getRentals(): Promise<Rental[]> {
+    const { rows } = await db.query(`
+        SELECT 
+            r.id, 
+            r.status, 
+            r.from_date, 
+            r.to_date, 
+            r.amount, 
+            p.id as product_id, 
+            p.name as product_name, 
+            p.description as product_description,
+            p.price as product_price,
+            p.unit as product_unit,
+            p.image as product_image,
+            p.hint as product_hint,
+            c.name as customer_name
+        FROM rentals r
+        JOIN products p ON r.product_id = p.id
+        JOIN customers c ON r.customer_id = c.id
+        ORDER BY r.from_date DESC
+    `);
+    
+    return rows.map(row => ({
+        id: row.id,
+        status: row.status,
+        from: format(new Date(row.from_date), 'yyyy-MM-dd'),
+        to: format(new Date(row.to_date), 'yyyy-MM-dd'),
+        amount: `$${parseFloat(row.amount).toFixed(2)}`,
+        customer: row.customer_name,
+        product: {
+            id: row.product_id,
+            name: row.product_name,
+            description: row.product_description,
+            price: parseFloat(row.product_price),
+            unit: row.product_unit,
+            image: row.product_image,
+            hint: row.product_hint
+        }
+    }));
+}
+
+export async function getRentalsByCustomer(customerId: string): Promise<Rental[]> {
+     const { rows } = await db.query(`
+        SELECT 
+            r.id, 
+            r.status, 
+            r.from_date, 
+            r.to_date, 
+            r.amount, 
+            p.id as product_id, 
+            p.name as product_name, 
+            p.description as product_description,
+            p.price as product_price,
+            p.unit as product_unit,
+            p.image as product_image,
+            p.hint as product_hint,
+            c.name as customer_name
+        FROM rentals r
+        JOIN products p ON r.product_id = p.id
+        JOIN customers c ON r.customer_id = c.id
+        WHERE r.customer_id = $1
+        ORDER BY r.from_date DESC
+    `, [customerId]);
+    
+    return rows.map(row => ({
+        id: row.id,
+        status: row.status,
+        from: format(new Date(row.from_date), 'yyyy-MM-dd'),
+        to: format(new Date(row.to_date), 'yyyy-MM-dd'),
+        amount: `$${parseFloat(row.amount).toFixed(2)}`,
+        customer: row.customer_name,
+        product: {
+            id: row.product_id,
+            name: row.product_name,
+            description: row.product_description,
+            price: parseFloat(row.product_price),
+            unit: row.product_unit,
+            image: row.product_image,
+            hint: row.product_hint
+        }
+    }));
+}
+
+
+export async function getUpcomingReturns() {
+    // This is more complex and depends on the exact schema and logic for "upcoming".
+    // For now, we'll return a placeholder. In a real app, this would be a specific SQL query.
     return [
         { name: "DSLR Camera", customer: "Olivia Martin", dueDate: "in 2 days", avatar: "OM" },
         { name: "Camping Tent", customer: "Jackson Lee", dueDate: "in 3 days", avatar: "JL" },
@@ -125,16 +150,17 @@ export function getUpcomingReturns() {
     ]
 }
 
-export function createRental(productId: string, from: Date, to: Date, price: number) {
-    const newRental = {
-        id: `ORD${String(rentals.length + 1).padStart(3, '0')}`,
-        customerId: 'user_2', // Mock current customer
-        productId,
-        status: 'Reserved' as const,
-        from: from.toISOString().split('T')[0],
-        to: to.toISOString().split('T')[0],
-        amount: `$${price.toFixed(2)}`,
-    };
-    rentals.push(newRental);
-    return newRental;
+export async function createRental(productId: string, from: Date, to: Date, price: number) {
+    // In a real app, you'd get the customer ID from the authenticated session
+    const customerId = 'user_2'; 
+    const fromDate = format(from, 'yyyy-MM-dd');
+    const toDate = format(to, 'yyyy-MM-dd');
+    const status = 'Reserved';
+
+    const { rows } = await db.query(
+        'INSERT INTO rentals (product_id, customer_id, from_date, to_date, amount, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [productId, customerId, fromDate, toDate, price, status]
+    );
+
+    return rows[0];
 }

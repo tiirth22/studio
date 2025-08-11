@@ -1,7 +1,8 @@
 import ProductCard from "@/components/products/product-card";
-import { products } from "@/lib/data";
+import { getProducts } from "@/lib/data";
 
-export default function CustomersPage() {
+export default async function CustomersPage() {
+  const products = await getProducts();
   return (
     <div className="space-y-6">
       <div>

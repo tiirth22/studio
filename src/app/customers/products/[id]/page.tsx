@@ -11,16 +11,42 @@ import { Separator } from '@/components/ui/separator';
 import { Package, CalendarDays, AlertTriangle } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { addDays } from 'date-fns';
-import { products, createRental } from '@/lib/data';
+import { Product, createRental, getProductById } from '@/lib/data';
 
 export default function CustomerProductPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const router = useRouter();
-  const product = products.find(p => p.id === id);
+  const [product, setProduct] = React.useState<Product | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 4),
   });
+
+  React.useEffect(() => {
+    if (id) {
+        getProductById(id)
+            .then(p => {
+                if (p) {
+                    setProduct(p)
+                }
+            })
+            .finally(() => setLoading(false));
+    }
+  }, [id]);
+
+
+  if (loading) {
+    return (
+        <div className="space-y-6">
+             <div className="flex flex-col items-center justify-center text-center p-12 h-80">
+                <Package className="h-16 w-16 text-muted-foreground animate-pulse" />
+            </div>
+        </div>
+    )
+  }
+
 
   if (!product) {
     return (

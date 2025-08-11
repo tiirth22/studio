@@ -10,8 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { getRentals } from "@/lib/data";
 
-export default function RecentRentals() {
-  const rentals = getRentals().slice(-5).reverse();
+export default async function RecentRentals() {
+  const rentals = (await getRentals()).slice(0, 5);
 
   return (
     <Card>

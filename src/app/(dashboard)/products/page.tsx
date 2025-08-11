@@ -2,9 +2,10 @@ import Link from "next/link";
 import ProductCard from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import { products } from "@/lib/data";
+import { getProducts } from "@/lib/data";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
