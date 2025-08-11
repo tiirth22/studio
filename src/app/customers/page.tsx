@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users } from 'lucide-react';
+import { Package } from 'lucide-react';
 
 export default function CustomersPage() {
   return (
@@ -7,14 +7,14 @@ export default function CustomersPage() {
       <h1 className="text-3xl font-bold font-headline">Customer Portal</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Welcome, Customer!</CardTitle>
-          <CardDescription>This section is under construction. You will soon be able to manage your rentals from here.</CardDescription>
+          <CardTitle>Welcome, Valued Customer!</CardTitle>
+          <CardDescription>Browse products, manage your rentals, and view your profile.</CardDescription>
         </CardHeader>
         <CardContent>
            <div className="flex flex-col items-center justify-center text-center border-2 border-dashed rounded-lg p-12 h-80">
-            <Users className="h-16 w-16 text-muted-foreground" />
-            <p className="mt-4 text-lg font-semibold">Coming Soon!</p>
-            <p className="text-sm text-muted-foreground mt-1">We're working hard to bring you this feature.</p>
+            <Package className="h-16 w-16 text-muted-foreground" />
+            <p className="mt-4 text-lg font-semibold">Browse Products</p>
+            <p className="text-sm text-muted-foreground mt-1">Our product catalog is coming soon to this portal.</p>
           </div>
         </CardContent>
       </Card>

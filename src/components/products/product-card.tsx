@@ -42,9 +42,11 @@ export default function ProductCard({ id, name, description, price, unit, image,
         <div className="text-lg font-bold">
           ${price} <span className="text-sm font-normal text-muted-foreground">/{unit}</span>
         </div>
-        <Button>
-          <CalendarDays className="mr-2 h-4 w-4" />
-          Book Now
+        <Button asChild>
+          <Link href="/customers">
+            <CalendarDays className="mr-2 h-4 w-4" />
+            Book Now
+          </Link>
         </Button>
       </CardFooter>
     </Card>
